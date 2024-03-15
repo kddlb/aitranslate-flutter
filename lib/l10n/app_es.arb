@@ -1,0 +1,22 @@
+{
+    "appTitle": "AITranslate",
+    "firstRunAlertTitle": "Se requiere una clave API de OpenAI.",
+    "firstRunAlertDescription": "La clave API se almacena en tu dispositivo y se envía directamente a la API de OpenAI.",
+    "firstRunAlertLinkOut": "Obtener de la plataforma OpenAI",
+    "firstRunAlertSet": "Establecer",
+    "clearTextTooltip": "Limpiar texto",
+    "settings": "Ajustes",
+    "sourceTextLabel": "Texto de origen",
+    "translationLabel": "Traducción",
+    "translateButton": "Traducir",
+    "apiKeyRequired": "Se requiere una clave API de OpenAI.",
+    "apiKeyRequiredAction": "Establecer",
+    "settingsApiKeyLabel": "Clave API de OpenAI",
+    "settingsApiKeyValidatorRequired": "Se requiere una clave API.",
+    "settingsModelLabel": "Modelo",
+    "settingsScrollAutomatically": "Desplazarse automáticamente al recibir la traducción",
+    "settingsSystemMessageLabel": "Mensaje del sistema",
+    "settingsSystemMessageLanguageRecommendation": "Se recomienda que esta configuración tenga un nombre de idioma en ella.",
+    "settingsSystemMessageValidatorRequired": "Se requiere un mensaje del sistema.",
+    "settingsFontSize": "Tamaño de fuente"
+}
