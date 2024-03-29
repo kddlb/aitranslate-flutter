@@ -28,12 +28,10 @@ class MainApp extends StatelessWidget {
         themeMode: ThemeMode.system,
         theme: ThemeData(
             useMaterial3: true,
-            colorSchemeSeed: Colors.deepOrange,
-            textTheme: GoogleFonts.interTightTextTheme()),
+            colorSchemeSeed: Colors.deepOrange),
         darkTheme: ThemeData(
             useMaterial3: true,
             colorSchemeSeed: Colors.deepOrange,
-            textTheme: GoogleFonts.interTightTextTheme(),
             brightness: Brightness.dark));
   }
 }
@@ -284,7 +282,7 @@ class _HomePageState extends State<HomePage> {
           }
         },
         onDone: () {
-          print("Done");
+
           context.loaderOverlay.hide();
         },
       );
