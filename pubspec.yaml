@@ -8,13 +8,14 @@ environment:
 
 dependencies:
   change_app_package_name: ^1.1.0
-  dart_openai: ^5.1.0
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
   flutter_settings_screen_ex: ^0.0.1+5
   google_fonts: ^6.2.1
+  google_generative_ai:
+    path: "../generative-ai-dart/pkgs/google_generative_ai"
   intl: any
   linked_scroll_controller: ^0.2.0
   loader_overlay: ^4.0.0

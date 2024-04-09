@@ -1,12 +1,13 @@
-import 'package:dart_openai/dart_openai.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screen_ex/flutter_settings_screen_ex.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'app_settings.dart';
 
@@ -26,9 +27,8 @@ class MainApp extends StatelessWidget {
         home: const HomePage(),
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
-        theme: ThemeData(
-            useMaterial3: true,
-            colorSchemeSeed: Colors.deepOrange),
+        theme:
+            ThemeData(useMaterial3: true, colorSchemeSeed: Colors.deepOrange),
         darkTheme: ThemeData(
             useMaterial3: true,
             colorSchemeSeed: Colors.deepOrange,
@@ -38,6 +38,7 @@ class MainApp extends StatelessWidget {
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -178,6 +179,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Expanded(
                     child: LoaderOverlay(
+                  useDefaultLoading: false,
+                  overlayWidgetBuilder: (_) {
+                    return const Center(child: CircularProgressIndicator());
+                  },
                   overlayWholeScreen: false,
                   overlayColor: Colors.black.withOpacity(0),
                   child: AnimatedPadding(
@@ -223,6 +228,8 @@ class _HomePageState extends State<HomePage> {
       currentFocus.unfocus();
     }
 
+    var client = HttpClient();
+
     var value = Settings.getValue<String>("openAiApiKey");
 
     var scrollOnChunk = Settings.getValue<bool>("scrollOnChunk")!;
@@ -244,7 +251,36 @@ class _HomePageState extends State<HomePage> {
         shouldFabBeVisible = false;
       });
 
-      OpenAI.apiKey = value;
+      final model = GenerativeModel(
+          model: "gemini-1.5-pro-latest",
+          apiKey: value,
+          requestOptions: RequestOptions(apiVersion: "v1beta"),
+          safetySettings: [
+            SafetySetting(
+                HarmCategory.dangerousContent, HarmBlockThreshold.none),
+            SafetySetting(HarmCategory.harassment, HarmBlockThreshold.none),
+            SafetySetting(HarmCategory.hateSpeech, HarmBlockThreshold.none),
+            SafetySetting(
+                HarmCategory.sexuallyExplicit, HarmBlockThreshold.none)
+          ],
+          systemInstruction: Settings.getValue<String>("openAiSystemMessage")!);
+
+      final generationStream =
+          model.generateContentStream([Content.text(_sourceTec.text)]);
+
+      generationStream.listen((event) {
+        _translationTec.text += event.text ?? "";
+        if (scrollOnChunk) {
+          _translationScroll.animateTo(
+              _translationScroll.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOut);
+        }
+      }, onDone: () {
+        context.loaderOverlay.hide();
+      });
+
+      /*OpenAI.apiKey = value;
 
       final requestMessages = [
         OpenAIChatCompletionChoiceMessageModel(
@@ -282,10 +318,10 @@ class _HomePageState extends State<HomePage> {
           }
         },
         onDone: () {
-
           context.loaderOverlay.hide();
         },
       );
+       */
     }
   }
 }
