@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -227,8 +225,6 @@ class _HomePageState extends State<HomePage> {
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
-
-    var client = HttpClient();
 
     var value = Settings.getValue<String>("openAiApiKey");
 
