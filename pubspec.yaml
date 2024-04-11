@@ -20,6 +20,7 @@ dependencies:
   linked_scroll_controller: ^0.2.0
   loader_overlay: ^4.0.0
   shared_preferences: ^2.2.2
+  super_clipboard: ^0.8.11
   url_launcher: ^6.2.5
 
 dev_dependencies:

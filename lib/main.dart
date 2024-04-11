@@ -5,6 +5,7 @@ import 'package:flutter_settings_screen_ex/flutter_settings_screen_ex.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:super_clipboard/super_clipboard.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import 'app_settings.dart';
@@ -115,6 +116,8 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  final clipboard = SystemClipboard.instance;
+
   @override
   Widget build(BuildContext context) {
     bool isWide =
@@ -124,6 +127,38 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.appTitle),
         actions: [
+          if (clipboard != null)
+            IconButton(
+              onPressed: () async {
+                final item = DataWriterItem();
+                item.add(Formats.plainText(_translationTec.text));
+                await clipboard!.write([item]);
+              },
+              icon: const Icon(Icons.content_copy),
+              tooltip: AppLocalizations.of(context)!.copy,
+            ),
+          if (clipboard != null)
+            IconButton(
+              onPressed: () async {
+                final reader = await clipboard!.read();
+
+                if (reader.canProvide(Formats.htmlText)) {
+                  final html = await reader.readValue(Formats.htmlText);
+                  _sourceTec.text = html!;
+                }
+
+                if (reader.canProvide(Formats.plainText)) {
+                  final text = await reader.readValue(Formats.plainText);
+                  _sourceTec.text = text!;
+                }
+
+                setState(() {
+                  shouldFabBeVisible = true;
+                });
+              },
+              icon: const Icon(Icons.content_paste),
+              tooltip: AppLocalizations.of(context)!.paste,
+            ),
           IconButton(
             onPressed: () {
               _sourceTec.text = "";
@@ -250,7 +285,7 @@ class _HomePageState extends State<HomePage> {
       final model = GenerativeModel(
           model: "gemini-1.5-pro-latest",
           apiKey: value,
-          requestOptions: RequestOptions(apiVersion: "v1beta"),
+          requestOptions: const RequestOptions(apiVersion: "v1beta"),
           safetySettings: [
             SafetySetting(
                 HarmCategory.dangerousContent, HarmBlockThreshold.none),
@@ -274,6 +309,12 @@ class _HomePageState extends State<HomePage> {
         }
       }, onDone: () {
         context.loaderOverlay.hide();
+      }, onError: (err) {
+        context.loaderOverlay.hide();
+        var errorSnackBar = SnackBar(
+          content: Text("Error: $err"),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
       });
 
       /*OpenAI.apiKey = value;

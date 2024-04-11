@@ -14,9 +14,11 @@
     "settingsApiKeyLabel": "Gemini API key",
     "settingsApiKeyValidatorRequired": "An API key is required.",
     "settingsScrollAutomatically": "Scroll automatically when receiving translation",
-    "settingsSystemMessageLabel": "System message",  
-    "settingsSystemMessageLanguageRecommendation": "It is recommended that this setting has a language name in it.",
-    "settingsSystemMessageValidatorRequired": "A system message is required.",
-    "settingsFontSize": "Font size"
+    "settingsSystemMessageLabel": "System instruction",
+    "settingsSystemMessageLanguageRecommendation": "It is recommended that the system instruction contains language name.",
+    "settingsSystemMessageValidatorRequired": "A system instruction is required.",
+    "settingsFontSize": "Font size",
+    "copy": "Copy from translation",
+    "paste": "Paste to source"
 
 }
