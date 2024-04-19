@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_settings_screen_ex/flutter_settings_screen_ex.dart';
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_settings_screen_ex/flutter_settings_screen_ex.dart';
 
 class AppSettings extends StatefulWidget {
   const AppSettings({super.key});
 
   @override
-  _AppSettingsState createState() => _AppSettingsState();
+  AppSettingsState createState() => AppSettingsState();
 }
 
-class _AppSettingsState extends State<AppSettings> {
+class AppSettingsState extends State<AppSettings> {
   @override
   Widget build(BuildContext context) {
     return SettingsScreen(
@@ -32,16 +31,6 @@ class _AppSettingsState extends State<AppSettings> {
               ? null
               : AppLocalizations.of(context)!.settingsApiKeyValidatorRequired,
         ),
-        RadioSettingsTile<String>(
-            title: AppLocalizations.of(context)!.settingsModelLabel,
-            settingKey: "openAiModel",
-            selected: "gpt-4-turbo-preview",
-            leading: const Icon(Icons.model_training),
-            values: const {
-              "gpt-4-turbo-preview": "GPT-4 Turbo",
-              "gpt-4": "GPT-4",
-              "gpt-3.5-turbo": "GPT-3.5 Turbo"
-            }),
         SwitchSettingsTile(
           title: AppLocalizations.of(context)!.settingsScrollAutomatically,
           settingKey: "scrollOnChunk",

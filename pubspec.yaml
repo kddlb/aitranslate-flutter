@@ -1,24 +1,26 @@
 name: aitranslate
 description: "OpenAI-based translator."
 publish_to: 'none'
-version: 1.0.5
+version: 1.1.0
 
 environment:
   sdk: '>=3.3.1 <4.0.0'
 
 dependencies:
   change_app_package_name: ^1.1.0
-  dart_openai: ^5.1.0
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
   flutter_settings_screen_ex: ^0.0.1+5
   google_fonts: ^6.2.1
+  google_generative_ai:
+    path: "../generative-ai-dart/pkgs/google_generative_ai"
   intl: any
   linked_scroll_controller: ^0.2.0
   loader_overlay: ^4.0.0
   shared_preferences: ^2.2.2
+  super_clipboard: ^0.8.11
   url_launcher: ^6.2.5
 
 dev_dependencies:
@@ -26,6 +28,14 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^3.0.0
 
+
+
 flutter:
   uses-material-design: true
   generate: true
+  fonts:
+    - family: Inter Variable LoSnoCo
+      fonts:
+        - asset: fonts/InterVariableLoSnoCo.ttf
+        - asset: fonts/InterVariableLoSnoCo-Italic.ttf
+          style: italic
