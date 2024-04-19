@@ -6,10 +6,10 @@ class AppSettings extends StatefulWidget {
   const AppSettings({super.key});
 
   @override
-  _AppSettingsState createState() => _AppSettingsState();
+  AppSettingsState createState() => AppSettingsState();
 }
 
-class _AppSettingsState extends State<AppSettings> {
+class AppSettingsState extends State<AppSettings> {
   @override
   Widget build(BuildContext context) {
     return SettingsScreen(
