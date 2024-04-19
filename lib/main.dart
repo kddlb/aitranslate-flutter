@@ -5,7 +5,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screen_ex/flutter_settings_screen_ex.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
-import 'package:loader_overlay/loader_overlay.dart';
 import 'package:super_clipboard/super_clipboard.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -13,7 +12,7 @@ import 'app_settings.dart';
 
 void main() {
   Settings.init().then((_) {
-    //add license for Inter
+    //<editor-fold desc="license for Inter">
     LicenseRegistry.addLicense(() => Stream<LicenseEntry>.value(
         const LicenseEntryWithLineBreaks(<String>['inter'], '''
 Copyright (c) 2016 The Inter Project Authors (https://github.com/rsms/inter)
@@ -108,6 +107,7 @@ INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
 DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.''')));
+    //</editor-fold>
     runApp(const MainApp());
   });
 }
@@ -151,6 +151,7 @@ class _HomePageState extends State<HomePage> {
   late ScrollController _translationScroll;
 
   bool shouldFabBeVisible = false;
+  bool shouldProgressBeVisible = false;
 
   @override
   void initState() {
@@ -226,6 +227,14 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.appTitle),
+        bottom: shouldProgressBeVisible
+            ? PreferredSize(
+                preferredSize: Size.fromHeight(6.0),
+                child: LinearProgressIndicator(
+                  value: null,
+                ),
+              )
+            : null,
         actions: [
           if (clipboard != null)
             IconButton(
@@ -311,32 +320,23 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Expanded(
-                    child: LoaderOverlay(
-                  useDefaultLoading: false,
-                  overlayWidgetBuilder: (_) {
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                  overlayWholeScreen: false,
-                  overlayColor: Colors.black.withOpacity(0),
-                  child: AnimatedPadding(
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.easeInOutCirc,
-                    padding: EdgeInsets.fromLTRB(
-                        0, 0, isWide ? 8 : 0, shouldFabBeVisible ? 80 : 0),
-                    child: TextField(
-                      controller: _translationTec,
-                      scrollController: _translationScroll,
-                      maxLines: null,
-                      expands: true,
-                      textAlignVertical: TextAlignVertical.top,
-                      readOnly: true,
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        alignLabelWithHint: true,
-                        labelText:
-                            AppLocalizations.of(context)!.translationLabel,
-                      ),
+                    child: AnimatedPadding(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOutCirc,
+                  padding: EdgeInsets.fromLTRB(
+                      0, 0, isWide ? 8 : 0, shouldFabBeVisible ? 80 : 0),
+                  child: TextField(
+                    controller: _translationTec,
+                    scrollController: _translationScroll,
+                    maxLines: null,
+                    expands: true,
+                    textAlignVertical: TextAlignVertical.top,
+                    readOnly: true,
+                    keyboardType: TextInputType.multiline,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      alignLabelWithHint: true,
+                      labelText: AppLocalizations.of(context)!.translationLabel,
                     ),
                   ),
                 )),
@@ -376,9 +376,9 @@ class _HomePageState extends State<HomePage> {
     } else {
       _sourceScroll.animateTo(0,
           duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
-      context.loaderOverlay.show();
       _translationTec.text = "";
       setState(() {
+        shouldProgressBeVisible = true;
         shouldFabBeVisible = false;
       });
 
@@ -408,57 +408,18 @@ class _HomePageState extends State<HomePage> {
               curve: Curves.easeOut);
         }
       }, onDone: () {
-        context.loaderOverlay.hide();
+        setState(() {
+          shouldProgressBeVisible = false;
+        });
       }, onError: (err) {
-        context.loaderOverlay.hide();
+        setState(() {
+          shouldProgressBeVisible = false;
+        });
         var errorSnackBar = SnackBar(
           content: Text("Error: $err"),
         );
         ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
       });
-
-      /*OpenAI.apiKey = value;
-
-      final requestMessages = [
-        OpenAIChatCompletionChoiceMessageModel(
-            role: OpenAIChatMessageRole.system,
-            content: [
-              OpenAIChatCompletionChoiceMessageContentItemModel.text(
-                  Settings.getValue<String>("openAiSystemMessage")!)
-            ]),
-        OpenAIChatCompletionChoiceMessageModel(
-            role: OpenAIChatMessageRole.user,
-            content: [
-              OpenAIChatCompletionChoiceMessageContentItemModel.text(
-                  _sourceTec.text)
-            ]),
-      ];
-
-      final chatStream = OpenAI.instance.chat.createStream(
-        model: Settings.getValue<String>("openAiModel")!,
-        messages: requestMessages,
-        maxTokens: 4096,
-      );
-
-      chatStream.listen(
-        (streamChatCompletion) {
-          final content = streamChatCompletion.choices.first.delta.content;
-          if (content != null) {
-            var completion = content.first?.text ?? "";
-            _translationTec.text += completion;
-            if (scrollOnChunk) {
-              _translationScroll.animateTo(
-                  _translationScroll.position.maxScrollExtent,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOut);
-            }
-          }
-        },
-        onDone: () {
-          context.loaderOverlay.hide();
-        },
-      );
-       */
     }
   }
 }
