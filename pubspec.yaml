@@ -14,8 +14,7 @@ dependencies:
     sdk: flutter
   flutter_settings_screen_ex: ^0.0.1+5
   google_fonts: ^6.2.1
-  google_generative_ai:
-    path: "../generative-ai-dart/pkgs/google_generative_ai"
+  google_generative_ai: ^0.3.1
   intl: any
   linked_scroll_controller: ^0.2.0
   shared_preferences: ^2.2.2

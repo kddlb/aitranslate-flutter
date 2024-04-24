@@ -394,7 +394,8 @@ class _HomePageState extends State<HomePage> {
             SafetySetting(
                 HarmCategory.sexuallyExplicit, HarmBlockThreshold.none)
           ],
-          systemInstruction: Settings.getValue<String>("openAiSystemMessage")!);
+          systemInstruction: Content.system(
+              Settings.getValue<String>("openAiSystemMessage")!));
 
       final generationStream =
           model.generateContentStream([Content.text(_sourceTec.text)]);

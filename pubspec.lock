@@ -152,10 +152,11 @@ packages:
   google_generative_ai:
     dependency: "direct main"
     description:
-      path: "../generative-ai-dart/pkgs/google_generative_ai"
-      relative: true
-    source: path
-    version: "0.2.4-wip"
+      name: google_generative_ai
+      sha256: "55e1f13cd8c957be2e3644e0347471db1833c2ff3ff66ebef9fb71e9d9c9f24c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
   http:
     dependency: transitive
     description:
