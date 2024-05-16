@@ -172,8 +172,10 @@ class _HomePageState extends State<HomePage> {
                 Text(AppLocalizations.of(context)!.firstRunAlertDescription),
             actions: <Widget>[
               TextButton(
-                  onPressed: () =>
-                      {launchUrlString("https://platform.openai.com/api-keys")},
+                  onPressed: () => {
+                        launchUrlString(
+                            "https://aistudio.google.com/app/apikey")
+                      },
                   child:
                       Text(AppLocalizations.of(context)!.firstRunAlertLinkOut)),
               TextButton(
