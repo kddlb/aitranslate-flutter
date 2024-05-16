@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_settings_screen_ex/flutter_settings_screen_ex.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import 'package:super_clipboard/super_clipboard.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_settings_screen_ex/flutter_settings_screen_ex.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 
 class AppSettings extends StatefulWidget {
   const AppSettings({super.key});
@@ -25,7 +25,6 @@ class AppSettingsState extends State<AppSettings> {
         ),*/
         TextInputSettingsTile(
           title: AppLocalizations.of(context)!.settingsApiKeyLabel,
-          leading: const Icon(Icons.key),
           settingKey: "openAiApiKey",
           validator: (ak) => (ak != null && ak.isNotEmpty)
               ? null
@@ -41,8 +40,7 @@ class AppSettingsState extends State<AppSettings> {
           title: AppLocalizations.of(context)!.settingsSystemMessageLabel,
           settingKey: "openAiSystemMessage",
           initialValue: "Translate to English.",
-          leading: const Icon(Icons.message),
-          subtitle: AppLocalizations.of(context)!
+          helperText: AppLocalizations.of(context)!
               .settingsSystemMessageLanguageRecommendation,
           validator: (ak) => (ak != null && ak.isNotEmpty)
               ? null
