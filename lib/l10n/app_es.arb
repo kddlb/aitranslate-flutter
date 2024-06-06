@@ -19,5 +19,6 @@
     "settingsSystemMessageValidatorRequired": "Se requiere una instrucción del sistema.",
     "settingsFontSize": "Tamaño de fuente",
     "copy": "Copiar desde traducción",
-    "paste": "Pegar a origen"
+    "paste": "Pegar a origen",
+    "model": "Modelo"
 }

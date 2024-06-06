@@ -1,7 +1,7 @@
 {
     "appTitle": "AITranslate",
     "firstRunAlertTitle": "A Gemini API key is required.",
-    "firstRunAlertDescription": "The API key is stored in your device and is sent directly to Google's Gemini API.",
+    "firstRunAlertDescription": "The API key is stored in your device and is sent directly to the Gemini API.",
     "firstRunAlertLinkOut": "Get from AI Studio",
     "firstRunAlertSet": "Set",
     "clearTextTooltip": "Clear text",
@@ -15,10 +15,11 @@
     "settingsApiKeyValidatorRequired": "An API key is required.",
     "settingsScrollAutomatically": "Scroll automatically when receiving translation",
     "settingsSystemMessageLabel": "System instruction",
-    "settingsSystemMessageLanguageRecommendation": "It is recommended that the system instruction contains language name.",
+    "settingsSystemMessageLanguageRecommendation": "It is recommended that the system instruction contains a language.",
     "settingsSystemMessageValidatorRequired": "A system instruction is required.",
     "settingsFontSize": "Font size",
     "copy": "Copy from translation",
-    "paste": "Paste to source"
+    "paste": "Paste to source",
+    "model": "Model"
 
 }

@@ -23,6 +23,14 @@ class AppSettingsState extends State<AppSettings> {
           defaultValue: 16,
           leading: const Icon(Icons.format_size),
         ),*/
+        DropDownSettingsTile(
+            title: AppLocalizations.of(context)!.model,
+            settingKey: "model",
+            selected: "gemini-1.5-flash-latest",
+            values: const {
+              "gemini-1.5-flash-latest": "Gemini 1.5 Flash",
+              "gemini-1.5-pro-latest": "Gemini 1.5 Pro",
+            }),
         TextInputSettingsTile(
           title: AppLocalizations.of(context)!.settingsApiKeyLabel,
           settingKey: "openAiApiKey",

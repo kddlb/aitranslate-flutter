@@ -230,7 +230,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.appTitle),
         bottom: shouldProgressBeVisible
-            ? PreferredSize(
+            ? const PreferredSize(
                 preferredSize: Size.fromHeight(6.0),
                 child: LinearProgressIndicator(
                   value: null,
@@ -367,6 +367,9 @@ class _HomePageState extends State<HomePage> {
 
     var scrollOnChunk = Settings.getValue<bool>("scrollOnChunk")!;
 
+    var selectedModel =
+        Settings.getValue<String>("model") ?? "gemini-1.5-flash-latest";
+
     if (value == null || value.isEmpty) {
       var errorSnackBar = SnackBar(
           content: Text(AppLocalizations.of(context)!.apiKeyRequired),
@@ -385,7 +388,7 @@ class _HomePageState extends State<HomePage> {
       });
 
       final model = GenerativeModel(
-          model: "gemini-1.5-pro-latest",
+          model: selectedModel,
           apiKey: value,
           requestOptions: const RequestOptions(apiVersion: "v1beta"),
           safetySettings: [
@@ -411,6 +414,12 @@ class _HomePageState extends State<HomePage> {
               curve: Curves.easeOut);
         }
       }, onDone: () {
+        if (scrollOnChunk) {
+          _translationScroll.animateTo(
+              _translationScroll.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOut);
+        }
         setState(() {
           shouldProgressBeVisible = false;
         });
