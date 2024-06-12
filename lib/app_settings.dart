@@ -12,53 +12,45 @@ class AppSettings extends StatefulWidget {
 class AppSettingsState extends State<AppSettings> {
   @override
   Widget build(BuildContext context) {
-    return SettingsScreen(
-      title: AppLocalizations.of(context)!.settings,
-      children: [
-        /*SliderSettingsTile(
-          title: AppLocalizations.of(context)!.settingsFontSize,
-          settingKey: "fontSize",
-          min: 12,
-          max: 72,
-          defaultValue: 16,
-          leading: const Icon(Icons.format_size),
-        ),*/
-        DropDownSettingsTile(
-            title: AppLocalizations.of(context)!.model,
-            settingKey: "model",
-            selected: "gemini-1.5-flash-latest",
-            values: const {
-              "gemini-1.5-flash-latest": "Gemini 1.5 Flash",
-              "gemini-1.5-pro-latest": "Gemini 1.5 Pro",
-            }),
-        TextInputSettingsTile(
-          title: AppLocalizations.of(context)!.settingsApiKeyLabel,
-          settingKey: "openAiApiKey",
-          validator: (ak) => (ak != null && ak.isNotEmpty)
-              ? null
-              : AppLocalizations.of(context)!.settingsApiKeyValidatorRequired,
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onPrimary),
+          onPressed: () => Navigator.of(context).pop(),
         ),
-        SwitchSettingsTile(
-          title: AppLocalizations.of(context)!.settingsScrollAutomatically,
-          settingKey: "scrollOnChunk",
-          leading: const Icon(Icons.arrow_downward),
-          defaultValue: true,
-        ),
-        TextInputSettingsTile(
-          title: AppLocalizations.of(context)!.settingsSystemMessageLabel,
-          settingKey: "openAiSystemMessage",
-          initialValue: "Translate to English.",
-          helperText: AppLocalizations.of(context)!
-              .settingsSystemMessageLanguageRecommendation,
-          validator: (ak) => (ak != null && ak.isNotEmpty)
-              ? null
-              : AppLocalizations.of(context)!
-                  .settingsSystemMessageValidatorRequired,
-        ),
-        const AboutListTile(
-            icon: Icon(Icons.info),
-            applicationLegalese: "\u{a9} 2024 Kevin López Brante"),
-      ],
+        title: Text(AppLocalizations.of(context)!.settings),
+        centerTitle: false,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+      ),
+      body: SettingsScreen(
+        hasAppBar: false,
+        children: [
+          DropDownSettingsTile(title: AppLocalizations.of(context)!.model, settingKey: "model", selected: "gemini-1.5-flash-latest", values: const {
+            "gemini-1.5-flash-latest": "Gemini 1.5 Flash",
+            "gemini-1.5-pro-latest": "Gemini 1.5 Pro",
+          }),
+          TextInputSettingsTile(
+            title: AppLocalizations.of(context)!.settingsApiKeyLabel,
+            settingKey: "openAiApiKey",
+            validator: (ak) => (ak != null && ak.isNotEmpty) ? null : AppLocalizations.of(context)!.settingsApiKeyValidatorRequired,
+          ),
+          SwitchSettingsTile(
+            title: AppLocalizations.of(context)!.settingsScrollAutomatically,
+            settingKey: "scrollOnChunk",
+            leading: const Icon(Icons.arrow_downward),
+            defaultValue: true,
+          ),
+          TextInputSettingsTile(
+            title: AppLocalizations.of(context)!.settingsSystemMessageLabel,
+            settingKey: "openAiSystemMessage",
+            initialValue: "Translate to English.",
+            helperText: AppLocalizations.of(context)!.settingsSystemMessageLanguageRecommendation,
+            validator: (ak) => (ak != null && ak.isNotEmpty) ? null : AppLocalizations.of(context)!.settingsSystemMessageValidatorRequired,
+          ),
+          const AboutListTile(icon: Icon(Icons.info), applicationLegalese: "\u{a9} 2024 Kevin López Brante"),
+        ],
+      ),
     );
   }
 }

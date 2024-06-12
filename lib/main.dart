@@ -13,8 +13,7 @@ import 'app_settings.dart';
 void main() {
   Settings.init().then((_) {
     //<editor-fold desc="license for Inter">
-    LicenseRegistry.addLicense(() => Stream<LicenseEntry>.value(
-        const LicenseEntryWithLineBreaks(<String>['inter'], '''
+    LicenseRegistry.addLicense(() => Stream<LicenseEntry>.value(const LicenseEntryWithLineBreaks(<String>['inter'], '''
 Copyright (c) 2016 The Inter Project Authors (https://github.com/rsms/inter)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
@@ -124,14 +123,8 @@ class MainApp extends StatelessWidget {
         home: const HomePage(),
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
-        theme: ThemeData(
-            useMaterial3: true,
-            colorSchemeSeed: Colors.deepOrange,
-            fontFamily: 'Inter Variable LoSnoCo'),
-        darkTheme: ThemeData(
-            useMaterial3: true,
-            colorSchemeSeed: Colors.deepOrange,
-            brightness: Brightness.dark));
+        theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.deepOrange, fontFamily: 'Inter Variable LoSnoCo'),
+        darkTheme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.deepOrange, brightness: Brightness.dark));
   }
 }
 
@@ -168,16 +161,9 @@ class _HomePageState extends State<HomePage> {
           context: context,
           builder: (BuildContext context) => AlertDialog(
             title: Text(AppLocalizations.of(context)!.firstRunAlertTitle),
-            content:
-                Text(AppLocalizations.of(context)!.firstRunAlertDescription),
+            content: Text(AppLocalizations.of(context)!.firstRunAlertDescription),
             actions: <Widget>[
-              TextButton(
-                  onPressed: () => {
-                        launchUrlString(
-                            "https://aistudio.google.com/app/apikey")
-                      },
-                  child:
-                      Text(AppLocalizations.of(context)!.firstRunAlertLinkOut)),
+              TextButton(onPressed: () => {launchUrlString("https://aistudio.google.com/app/apikey")}, child: Text(AppLocalizations.of(context)!.firstRunAlertLinkOut)),
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -192,15 +178,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void showSettingsModal(BuildContext context) {
-    if (MediaQuery.of(context).size.width >
-        MediaQuery.of(context).size.height) {
-      showModalBottomSheet(
-          context: context,
-          builder: (context) => const AppSettings(),
-          elevation: 4.0,
-          shape: const RoundedRectangleBorder(),
-          showDragHandle: false,
-          isScrollControlled: true);
+    if (MediaQuery.of(context).size.width > MediaQuery.of(context).size.height) {
+      showModalBottomSheet(context: context, builder: (context) => const AppSettings(), elevation: 4.0, shape: const RoundedRectangleBorder(), showDragHandle: false, isScrollControlled: true);
     } else {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => const AppSettings(),
@@ -223,12 +202,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isWide =
-        MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
+    bool isWide = MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.appTitle),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
         bottom: shouldProgressBeVisible
             ? const PreferredSize(
                 preferredSize: Size.fromHeight(6.0),
@@ -245,7 +227,7 @@ class _HomePageState extends State<HomePage> {
                 item.add(Formats.plainText(_translationTec.text));
                 await clipboard!.write([item]);
               },
-              icon: const Icon(Icons.content_copy),
+              icon: Icon(Icons.content_copy, color: Theme.of(context).colorScheme.onPrimary),
               tooltip: AppLocalizations.of(context)!.copy,
             ),
           if (clipboard != null)
@@ -267,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                   shouldFabBeVisible = true;
                 });
               },
-              icon: const Icon(Icons.content_paste),
+              icon: Icon(Icons.content_paste, color: Theme.of(context).colorScheme.onPrimary),
               tooltip: AppLocalizations.of(context)!.paste,
             ),
           IconButton(
@@ -276,14 +258,14 @@ class _HomePageState extends State<HomePage> {
               _translationTec.text = "";
               shouldFabBeVisible = false;
             },
-            icon: const Icon(Icons.backspace),
+            icon: Icon(Icons.backspace, color: Theme.of(context).colorScheme.onPrimary),
             tooltip: AppLocalizations.of(context)!.clearTextTooltip,
           ),
           IconButton(
             onPressed: () {
               showSettingsModal(context);
             },
-            icon: const Icon(Icons.settings),
+            icon: Icon(Icons.settings, color: Theme.of(context).colorScheme.onPrimary),
             tooltip: AppLocalizations.of(context)!.settings,
           )
         ],
@@ -298,8 +280,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(
-                        0, 0, isWide ? 8 : 0, isWide ? 0 : 8),
+                    padding: EdgeInsets.fromLTRB(0, 0, isWide ? 8 : 0, isWide ? 0 : 8),
                     child: TextField(
                       controller: _sourceTec,
                       scrollController: _sourceScroll,
@@ -308,11 +289,7 @@ class _HomePageState extends State<HomePage> {
                       autofocus: true,
                       textAlignVertical: TextAlignVertical.top,
                       keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          alignLabelWithHint: true,
-                          labelText:
-                              AppLocalizations.of(context)!.sourceTextLabel),
+                      decoration: InputDecoration(border: const OutlineInputBorder(), alignLabelWithHint: true, labelText: AppLocalizations.of(context)!.sourceTextLabel),
                       onChanged: (val) => {
                         setState(() {
                           shouldFabBeVisible = val != "";
@@ -325,8 +302,7 @@ class _HomePageState extends State<HomePage> {
                     child: AnimatedPadding(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeInOutCirc,
-                  padding: EdgeInsets.fromLTRB(
-                      0, 0, isWide ? 8 : 0, shouldFabBeVisible ? 80 : 0),
+                  padding: EdgeInsets.fromLTRB(0, 0, isWide ? 8 : 0, shouldFabBeVisible ? 80 : 0),
                   child: TextField(
                     controller: _translationTec,
                     scrollController: _translationScroll,
@@ -367,8 +343,7 @@ class _HomePageState extends State<HomePage> {
 
     var scrollOnChunk = Settings.getValue<bool>("scrollOnChunk")!;
 
-    var selectedModel =
-        Settings.getValue<String>("model") ?? "gemini-1.5-flash-latest";
+    var selectedModel = Settings.getValue<String>("model") ?? "gemini-1.5-flash-latest";
 
     if (value == null || value.isEmpty) {
       var errorSnackBar = SnackBar(
@@ -379,8 +354,7 @@ class _HomePageState extends State<HomePage> {
           ));
       ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
     } else {
-      _sourceScroll.animateTo(0,
-          duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
+      _sourceScroll.animateTo(0, duration: const Duration(milliseconds: 500), curve: Curves.easeOut);
       _translationTec.text = "";
       setState(() {
         shouldProgressBeVisible = true;
@@ -391,34 +365,19 @@ class _HomePageState extends State<HomePage> {
           model: selectedModel,
           apiKey: value,
           requestOptions: const RequestOptions(apiVersion: "v1beta"),
-          safetySettings: [
-            SafetySetting(
-                HarmCategory.dangerousContent, HarmBlockThreshold.none),
-            SafetySetting(HarmCategory.harassment, HarmBlockThreshold.none),
-            SafetySetting(HarmCategory.hateSpeech, HarmBlockThreshold.none),
-            SafetySetting(
-                HarmCategory.sexuallyExplicit, HarmBlockThreshold.none)
-          ],
-          systemInstruction: Content.system(
-              Settings.getValue<String>("openAiSystemMessage")!));
+          safetySettings: [SafetySetting(HarmCategory.dangerousContent, HarmBlockThreshold.none), SafetySetting(HarmCategory.harassment, HarmBlockThreshold.none), SafetySetting(HarmCategory.hateSpeech, HarmBlockThreshold.none), SafetySetting(HarmCategory.sexuallyExplicit, HarmBlockThreshold.none)],
+          systemInstruction: Content.system(Settings.getValue<String>("openAiSystemMessage")!));
 
-      final generationStream =
-          model.generateContentStream([Content.text(_sourceTec.text)]);
+      final generationStream = model.generateContentStream([Content.text(_sourceTec.text)]);
 
       generationStream.listen((event) {
         _translationTec.text += event.text ?? "";
         if (scrollOnChunk) {
-          _translationScroll.animateTo(
-              _translationScroll.position.maxScrollExtent,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeOut);
+          _translationScroll.animateTo(_translationScroll.position.maxScrollExtent, duration: const Duration(milliseconds: 200), curve: Curves.easeOut);
         }
       }, onDone: () {
         if (scrollOnChunk) {
-          _translationScroll.animateTo(
-              _translationScroll.position.maxScrollExtent,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeOut);
+          _translationScroll.animateTo(_translationScroll.position.maxScrollExtent, duration: const Duration(milliseconds: 200), curve: Curves.easeOut);
         }
         setState(() {
           shouldProgressBeVisible = false;
