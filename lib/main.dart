@@ -207,10 +207,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.appTitle),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
         bottom: shouldProgressBeVisible
             ? const PreferredSize(
                 preferredSize: Size.fromHeight(6.0),
@@ -227,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                 item.add(Formats.plainText(_translationTec.text));
                 await clipboard!.write([item]);
               },
-              icon: Icon(Icons.content_copy, color: Theme.of(context).colorScheme.onPrimary),
+              icon: const Icon(Icons.content_copy),
               tooltip: AppLocalizations.of(context)!.copy,
             ),
           if (clipboard != null)
@@ -249,23 +245,27 @@ class _HomePageState extends State<HomePage> {
                   shouldFabBeVisible = true;
                 });
               },
-              icon: Icon(Icons.content_paste, color: Theme.of(context).colorScheme.onPrimary),
+              icon: const Icon(Icons.content_paste),
               tooltip: AppLocalizations.of(context)!.paste,
             ),
           IconButton(
-            onPressed: () {
-              _sourceTec.text = "";
-              _translationTec.text = "";
-              shouldFabBeVisible = false;
-            },
-            icon: Icon(Icons.backspace, color: Theme.of(context).colorScheme.onPrimary),
+            onPressed: shouldProgressBeVisible
+                ? null
+                : () {
+                    _sourceTec.text = "";
+                    _translationTec.text = "";
+                    shouldFabBeVisible = false;
+                  },
+            icon: const Icon(Icons.backspace),
             tooltip: AppLocalizations.of(context)!.clearTextTooltip,
           ),
           IconButton(
-            onPressed: () {
-              showSettingsModal(context);
-            },
-            icon: Icon(Icons.settings, color: Theme.of(context).colorScheme.onPrimary),
+            onPressed: shouldProgressBeVisible
+                ? null
+                : () {
+                    showSettingsModal(context);
+                  },
+            icon: const Icon(Icons.settings),
             tooltip: AppLocalizations.of(context)!.settings,
           )
         ],
