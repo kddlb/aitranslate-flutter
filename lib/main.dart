@@ -271,55 +271,52 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Center(
-        child: SizedBox(
-          width: 1280,
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Flex(
-              direction: isWide ? Axis.horizontal : Axis.vertical,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, isWide ? 8 : 0, isWide ? 0 : 8),
-                    child: TextField(
-                      controller: _sourceTec,
-                      scrollController: _sourceScroll,
-                      maxLines: null,
-                      expands: true,
-                      autofocus: true,
-                      textAlignVertical: TextAlignVertical.top,
-                      keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(border: const OutlineInputBorder(), alignLabelWithHint: true, labelText: AppLocalizations.of(context)!.sourceTextLabel),
-                      onChanged: (val) => {
-                        setState(() {
-                          shouldFabBeVisible = val != "";
-                        })
-                      },
-                    ),
-                  ),
-                ),
-                Expanded(
-                    child: AnimatedPadding(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOutCirc,
-                  padding: EdgeInsets.fromLTRB(0, 0, isWide ? 8 : 0, shouldFabBeVisible ? 80 : 0),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Flex(
+            direction: isWide ? Axis.horizontal : Axis.vertical,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0, isWide ? 8 : 0, isWide ? 0 : 8),
                   child: TextField(
-                    controller: _translationTec,
-                    scrollController: _translationScroll,
+                    controller: _sourceTec,
+                    scrollController: _sourceScroll,
                     maxLines: null,
                     expands: true,
+                    autofocus: true,
                     textAlignVertical: TextAlignVertical.top,
-                    readOnly: true,
                     keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      alignLabelWithHint: true,
-                      labelText: AppLocalizations.of(context)!.translationLabel,
-                    ),
+                    decoration: InputDecoration(border: const OutlineInputBorder(), alignLabelWithHint: true, labelText: AppLocalizations.of(context)!.sourceTextLabel),
+                    onChanged: (val) => {
+                      setState(() {
+                        shouldFabBeVisible = val != "";
+                      })
+                    },
                   ),
-                )),
-              ],
-            ),
+                ),
+              ),
+              Expanded(
+                  child: AnimatedPadding(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOutCirc,
+                padding: EdgeInsets.fromLTRB(0, 0, 0, shouldFabBeVisible ? 80 : 0),
+                child: TextField(
+                  controller: _translationTec,
+                  scrollController: _translationScroll,
+                  maxLines: null,
+                  expands: true,
+                  textAlignVertical: TextAlignVertical.top,
+                  readOnly: true,
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    alignLabelWithHint: true,
+                    labelText: AppLocalizations.of(context)!.translationLabel,
+                  ),
+                ),
+              )),
+            ],
           ),
         ),
       ),
